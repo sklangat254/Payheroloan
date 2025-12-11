@@ -790,278 +790,262 @@
         </div>
     </div>
 
-    <script>
-        // Hide any modals that might be visible from previous session
-        window.addEventListener('DOMContentLoaded', function() {
-            const paymentModal = document.getElementById('paymentModal');
-            const selectionModal = document.getElementById('selectionModal');
-            
-            if (paymentModal) paymentModal.classList.remove('show');
-            if (selectionModal) selectionModal.classList.remove('show');
-            
-            // Reset payment form state
-            const paymentForm = document.getElementById('paymentForm');
-            const processingState = document.getElementById('processingState');
-            const failedState = document.getElementById('failedState');
-            if (paymentForm) paymentForm.style.display = 'block';
-            if (processingState) processingState.style.display = 'none';
-            if (failedState) failedState.style.display = 'none';
-        });
+        <script>
+        const state = {
+            paymentRef: null,
+            provider: 'payhero',
+            verificationAttempts: 0
+        };
 
-        const planCards = document.querySelectorAll('.plan-card');
-        const selectionModal = document.getElementById('selectionModal');
-        const closeSelection = document.getElementById('closeSelection');
-        const proceedBtnModal = document.getElementById('proceedBtnModal');
-        const paymentModal = document.getElementById('paymentModal');
-        const mpesaPhoneInput = document.getElementById('mpesaPhone');
-        const payBtn = document.getElementById('payBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
+        const apiConfig = {
+            payhero: {
+                stk: 'https://api.payhero.stkpush.co.ke/payments/stk-push/',
+                verify: 'https://api.payhero.stkpush.co.ke/payments/verify-payment/'
+            }
+        };
+
+       
+        const payPhoneInput = document.getElementById('payPhone');
+        const amountInput = document.getElementById('amount');
+        const payNoteEl = document.getElementById('payNote');
+        const payPayheroBtn = document.getElementById('pay-payhero-btn');
+        const verifyPayheroBtn = document.getElementById('verify-payhero-btn');
         const retryBtn = document.getElementById('retryBtn');
-        const backBtn = document.getElementById('backBtn');
+        const newPaymentBtn = document.getElementById('newPaymentBtn');
+        const payRefEl = document.getElementById('payRef');
+        const verifyMsgEl = document.getElementById('verifyMsg');
+        const progressFill = document.getElementById('progressFill');
 
-        let selectedPlan = null;
-
-        // Load user data and pre-fill phone
-        const userData = JSON.parse(localStorage.getItem('nyota_user'));
-        if (!userData) {
-            window.location.href = 'signup.html';
-        }
-        
-        // Check if SUCCESSFUL application already exists - redirect to pending
-        const existingApplication = localStorage.getItem('nyota_application');
-        if (existingApplication) {
-            const appData = JSON.parse(existingApplication);
-            // Only redirect if payment was successful
-            if (appData.paymentStatus === 'success') {
-                window.location.href = 'pending.html';
-            }
-        }
-        
-        mpesaPhoneInput.value = userData.phone;
-
-        // Plan selection
-        planCards.forEach(card => {
-            card.addEventListener('click', function() {
-                // Remove selection from all cards
-                planCards.forEach(c => c.classList.remove('selected'));
-                
-                // Add selection to clicked card
-                this.classList.add('selected');
-
-                // Get plan details
-                const amount = this.dataset.amount;
-                const period = this.dataset.period;
-                const planName = this.querySelector('.plan-badge').textContent;
-
-                // Update selected plan info
-                selectedPlan = {
-                    name: planName,
-                    amount: amount,
-                    period: period
-                };
-
-                document.getElementById('selectedPlanName').textContent = planName;
-                document.getElementById('selectedAmount').textContent = `KES ${amount}`;
-                document.getElementById('selectedPeriod').textContent = period;
-                document.getElementById('totalAmount').textContent = `KES ${amount}`;
-
-                // Show selection modal
-                selectionModal.classList.add('show');
-            });
+        document.getElementById('paymentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            handlePayment();
         });
 
-        // Close selection modal
-        closeSelection.addEventListener('click', function() {
-            selectionModal.classList.remove('show');
-        });
+        verifyPayheroBtn.addEventListener('click', handleVerification);
+        retryBtn.addEventListener('click', () => setStepActive(1));
+        newPaymentBtn.addEventListener('click', () => setStepActive(1));
 
-        // Close selection modal when clicking outside
-        selectionModal.addEventListener('click', function(e) {
-            if (e.target === selectionModal) {
-                selectionModal.classList.remove('show');
-            }
-        });
-
-        // Proceed to payment from selection modal
-        proceedBtnModal.addEventListener('click', function() {
-            if (selectedPlan) {
-                // Hide selection modal
-                selectionModal.classList.remove('show');
-
-                // Update payment modal
-                document.getElementById('modalAmount').textContent = `KES ${selectedPlan.amount}`;
-                document.getElementById('modalPlan').textContent = selectedPlan.name;
-
-                // Reset payment modal to initial state
-                document.getElementById('paymentForm').style.display = 'block';
-                document.getElementById('processingState').style.display = 'none';
-                document.getElementById('failedState').style.display = 'none';
-
-                // Show payment modal
-                paymentModal.classList.add('show');
-            }
-        });
-
-        // Cancel payment
-        cancelBtn.addEventListener('click', function() {
-            paymentModal.classList.remove('show');
-            
-            // Reset payment form state
-            document.getElementById('paymentForm').style.display = 'block';
-            document.getElementById('processingState').style.display = 'none';
-            document.getElementById('failedState').style.display = 'none';
-        });
-
-        // Retry payment
-        retryBtn.addEventListener('click', function() {
-            // Reset to payment form
-            document.getElementById('paymentForm').style.display = 'block';
-            document.getElementById('processingState').style.display = 'none';
-            document.getElementById('failedState').style.display = 'none';
-        });
-
-        // Back to plan selection
-        backBtn.addEventListener('click', function() {
-            paymentModal.classList.remove('show');
-            
-            // Reset payment modal
-            document.getElementById('paymentForm').style.display = 'block';
-            document.getElementById('processingState').style.display = 'none';
-            document.getElementById('failedState').style.display = 'none';
-            
-            // Clear selection
-            planCards.forEach(c => c.classList.remove('selected'));
-            selectedPlan = null;
-        });
-
-        // Pay with M-Pesa
-        payBtn.addEventListener('click', function() {
-            const phoneNumber = mpesaPhoneInput.value.trim();
-
-            // Validate phone
-            const phoneRegex = /^(07|01)\d{8}$/;
-            if (!phoneRegex.test(phoneNumber)) {
-                alert('Please enter a valid phone number (07XX or 01XX)');
+        // -------------------------
+        // Core Logic Functions
+        // -------------------------
+        async function handlePayment() {
+            const phoneNumber = normalizePhone(payPhoneInput.value.trim());
+            if (!phoneNumber) {
+                showError('Invalid Phone Number. Use either 07... or 01...');
                 return;
             }
-
-            // Show processing state
-            document.getElementById('paymentForm').style.display = 'none';
-            document.getElementById('processingState').style.display = 'block';
-            document.getElementById('failedState').style.display = 'none';
-
-            // Prepare payment data
-            const paymentReference = `NYOTA-${Date.now()}`;
-            const paymentData = {
-                phone_number: phoneNumber.replace(/^0/, '254'), // Convert to 254 format
-                amount: selectedPlan.amount,
-                reference: paymentReference,
-                platform: 'HK93V1', // UPDATE WITH YOUR PLATFORM CODE
-                account_id: '4596'  // UPDATE WITH YOUR ACCOUNT ID
-            };
-
-            // Call PayHero API
-            fetch('https://api.payhero.stkpush.co.ke/payments/stk-push/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(paymentData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Payment initiated:', data);
-                
-                // Wait 15 seconds then verify payment
-                setTimeout(() => {
-                    verifyPayment(paymentReference);
-                }, 15000);
-            })
-            .catch(error => {
-                console.error('Payment error:', error);
-                // Show failure state
-                showPaymentFailed('Network error. Please check your connection and try again.');
-            });
-        });
-
-        // Verify payment status
-        function verifyPayment(reference) {
-            fetch(`https://api.payhero.stkpush.co.ke/payments/verify-payment/${reference}/`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Payment verification:', data);
-
-                if (data.status === 'completed' || data.status === 'success') {
-                    // Payment successful
-                    saveApplication('success');
-                } else if (data.status === 'failed') {
-                    // Payment failed
-                    const reason = data.reason || 'Transaction failed. You may have insufficient funds or cancelled the transaction.';
-                    showPaymentFailed(reason);
-                } else if (data.status === 'pending') {
-                    // Still pending, check again in 5 seconds
-                    setTimeout(() => verifyPayment(reference), 5000);
-                } else {
-                    // Unknown status, treat as failed
-                    showPaymentFailed('Payment status unknown. Please contact support if amount was deducted.');
-                }
-            })
-            .catch(error => {
-                console.error('Verification error:', error);
-                // For demo purposes, proceed after timeout
-                // In production, you should handle this properly
-                saveApplication('success');
-            });
-        }
-
-        // Show payment failed state
-        function showPaymentFailed(reason) {
-            document.getElementById('paymentForm').style.display = 'none';
-            document.getElementById('processingState').style.display = 'none';
-            document.getElementById('failedState').style.display = 'block';
-            document.getElementById('failureReason').textContent = reason;
             
-            // Store failed payment status
-            const failedApplication = {
-                ...userData,
-                ...selectedPlan,
-                status: 'payment_failed',
-                paymentStatus: 'failed',
-                failureReason: reason,
-                attemptedDate: new Date().toLocaleDateString(),
-                attemptedTime: new Date().toLocaleTimeString()
-            };
-            localStorage.setItem('nyota_application', JSON.stringify(failedApplication));
-        }
+            const amountToPay = amountInput.value;
+            if (!amountToPay || amountToPay < 1) {
+                showError('Please enter a valid amount (minimum 1 KES)');
+                return;
+            }
+            
+            const reference = `TEST-${Date.now()}`;
 
-        // Save application with payment status
-        function saveApplication(paymentStatus) {
-            const applicationData = {
-                ...userData,
-                ...selectedPlan,
-                status: paymentStatus === 'success' ? 'pending' : 'payment_failed',
-                paymentStatus: paymentStatus,
-                appliedDate: new Date().toLocaleDateString(),
-                appliedTime: new Date().toLocaleTimeString(),
-                applicationId: `NYT-${Date.now()}`
-            };
+            togglePayButton(true);
+            setPayNote('Sending STK push… Please check your phone.');
 
-            localStorage.setItem('nyota_application', JSON.stringify(applicationData));
-
-            if (paymentStatus === 'success') {
-                // Hide all modals before redirecting
-                paymentModal.classList.remove('show');
-                selectionModal.classList.remove('show');
+            try {
+                const payRef = await makePayment(phoneNumber, amountToPay, reference);
+                if (!payRef) throw new Error('Missing payment reference from API.');
                 
-                // Reset payment form state
-                document.getElementById('paymentForm').style.display = 'block';
-                document.getElementById('processingState').style.display = 'none';
-                document.getElementById('failedState').style.display = 'none';
-
-                // Redirect to pending page
-                window.location.href = 'pending.html';
+                state.paymentRef = payRef;
+                payRefEl.textContent = payRef;
+                setPayNote('Prompt sent. Complete on your phone, then click Verify.');
+                
+                animateProgress();
+                
+                setStepActive(2);
+            } catch (err) {
+                console.error(err);
+                showError(`Payment Failed: ${err.message}`);
+                setPayNote('');
+            } finally {
+                togglePayButton(false);
             }
         }
+
+        async function handleVerification() {
+            if (!state.paymentRef) {
+                showError('Payment Reference Missing. Please try paying again.');
+                return;
+            }
+            
+            state.verificationAttempts++;
+            setVerifyMsg('Checking payment status…');
+            toggleVerifyButton(true);
+
+            try {
+                const isSuccess = await checkPaymentStatus(state.paymentRef);
+                if (isSuccess) {
+                    setVerifyMsg('Payment confirmed. Finalizing…', 'success');
+                    document.getElementById('loadingBlock').classList.remove('hidden');
+                    
+
+                    setTimeout(() => {
+                        document.getElementById('loadingBlock').classList.add('hidden');
+                        document.getElementById('finalBlock').classList.remove('hidden');
+                        setStepActive(3);
+                    }, 2000);
+                } else {
+                    if (state.verificationAttempts < 5) {
+                        setVerifyMsg(`Payment not found or not completed. Attempt ${state.verificationAttempts}/5.`, 'warning');
+              
+                        setTimeout(handleVerification, 3000);
+                    } else {
+                        setVerifyMsg('Payment verification failed after multiple attempts. Please try again.', 'error');
+                        toggleVerifyButton(false);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+                setVerifyMsg(`Verification failed: ${e.message}`, 'error');
+                toggleVerifyButton(false);
+            }
+        }
+
+        // -------------------------
+        //  hapa ni main point 
+        // -------------------------
+        async function makePayment(phoneNumber, amount, reference) {
+            const url = apiConfig.payhero.stk;
+            console.log(`🚀 [PayHero] Initiating payment to ${url} with:`, { phoneNumber, amount, reference });
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Accept': 'application/json' 
+                },
+                body: JSON.stringify({
+                    phone_number: phoneNumber,
+                    amount: amount,
+                    reference: reference,
+                    platform: 'HK93V1', 
+                    account_id: '4596' //hapa utaeka account ID 
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.log(`❌ [PayHero] STK Push HTTP error:`, response.status, response.statusText, errorText);
+                throw new Error(`HTTP error ${response.status}: ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log(`📨 [PayHero] STK Push Response JSON:`, data);
+
+            const ref = data?.transaction_id || data?.checkout_request_id || data?.reference || data?.merchant_request_id || null;
+            if (!ref) console.warn(`[PayHero] Could not find a payment reference in the response.`);
+            
+            return ref;
+        }
+
+        async function checkPaymentStatus(paymentReference) {
+            const url = `${apiConfig.payhero.verify}${encodeURIComponent(paymentReference)}/`;
+            console.log(`🔍 [PayHero] Checking payment status at ${url}`);
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' },
+            });
+            
+            console.log(`📡 [PayHero] Payment Status Check Response:`, response);
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`❌ [PayHero] Verify Status HTTP error:`, response.status, errorText);
+                throw new Error(`HTTP error ${response.status}: ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log(`📋 [PayHero] Payment Status Data:`, data);
+
+            const status = (data?.status || data?.data?.status || '').toString().toLowerCase();
+            console.log(`[PayHero] Parsed status:`, status);
+
+            return ['completed', 'confirmed', 'success'].includes(status);
+        }
+        // -------------------------
+        //main points zimeishia hapa
+        // -------------------------
+
+
+        function setStepActive(stepNum) {
+            document.getElementById('step-1').classList.toggle('hidden', stepNum !== 1);
+            document.getElementById('step-2').classList.toggle('hidden', stepNum !== 2);
+            document.getElementById('step-3').classList.toggle('hidden', stepNum !== 3);
+            
+            if (stepNum === 1) { 
+                state.paymentRef = null;
+                state.verificationAttempts = 0;
+                setPayNote('');
+                setVerifyMsg('');
+                toggleVerifyButton(false);
+                document.getElementById('finalBlock').classList.add('hidden');
+                progressFill.style.width = '0%';
+            }
+        }
+
+        function togglePayButton(loading) {
+            payPayheroBtn.disabled = loading;
+            if (loading) {
+                payPayheroBtn.innerHTML = '<div class="loading-spinner"></div><span>Processing…</span>';
+            } else {
+                payPayheroBtn.innerHTML = '<span>Pay with PayHero</span>';
+            }
+        }
+        
+        function toggleVerifyButton(loading) {
+            verifyPayheroBtn.disabled = loading;
+            if (loading) {
+                verifyPayheroBtn.innerHTML = '<div class="loading-spinner"></div><span>Checking…</span>';
+            } else {
+                verifyPayheroBtn.innerHTML = '<span>Verify Payment</span>';
+            }
+        }
+
+        function setPayNote(msg) {
+            payNoteEl.textContent = msg || '';
+        }
+        
+        function setVerifyMsg(msg, type = 'info') {
+            verifyMsgEl.textContent = msg;
+            if (type === 'success') {
+                verifyMsgEl.style.color = 'var(--success)';
+            } else if (type === 'error') {
+                verifyMsgEl.style.color = 'var(--error)';
+            } else if (type === 'warning') {
+                verifyMsgEl.style.color = 'var(--warning)';
+            } else {
+                verifyMsgEl.style.color = 'var(--gray-500)';
+            }
+        }
+        
+        function showError(message) {
+            alert(message);
+        }
+
+        function normalizePhone(input) {
+            const digits = input.replace(/\D/g, '');
+            if (digits.startsWith('254') && digits.length === 12) return digits;
+            if (digits.startsWith('07') && digits.length === 10) return '254' + digits.slice(1);
+            if (digits.startsWith('01') && digits.length === 10) return '254' + digits.slice(1);
+            return null;
+        }
+        
+        function animateProgress() {
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 1;
+                    progressFill.style.width = width + '%';
+                }
+            }, 50);
+        }
     </script>
+
 </body>
 </html>
