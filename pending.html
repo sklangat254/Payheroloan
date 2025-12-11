@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Pending - NYOTA Loans</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #FFD23F;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --success: #06D6A0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E8ECEF 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .status-badge {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 30px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .status-badge.active {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 210, 63, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 210, 63, 0.8); }
+        }
+
+        .application-details {
+            margin-bottom: 30px;
+        }
+
+        .detail-section {
+            margin-bottom: 30px;
+        }
+
+        .detail-section h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #E8ECEF;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark);
+            text-align: right;
+        }
+
+        .application-id {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 210, 63, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .application-id-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .application-id-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .timeline {
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            width: 2px;
+            height: 100%;
+            background: #E8ECEF;
+        }
+
+        .timeline-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+            z-index: 1;
+            position: relative;
+        }
+
+        .timeline-icon.pending {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .timeline-icon.inactive {
+            background: #E8ECEF;
+            color: #999;
+        }
+
+        .timeline-content h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #e8f5ff;
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h4 {
+            font-family: 'Sora', sans-serif;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff5520;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: #E8ECEF;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d4d8dd;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="success-icon">⏳</div>
+            
+            <div class="header">
+                <span class="status-badge active">🟡 PENDING REVIEW</span>
+                <h1>Application Submitted!</h1>
+                <p>Your loan application has been successfully submitted and is currently under review. You will receive an update within 24-48 hours.</p>
+            </div>
+
+            <div class="application-id">
+                <div class="application-id-label">Application ID</div>
+                <div class="application-id-value" id="applicationId">-</div>
+            </div>
+
+            <div class="application-details">
+                <div class="detail-section">
+                    <h3>Personal Information</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Full Name:</span>
+                        <span class="detail-value" id="fullName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Phone Number:</span>
+                        <span class="detail-value" id="phoneNumber">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">ID Number:</span>
+                        <span class="detail-value" id="idNumber">-</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Application Details</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Savings Plan:</span>
+                        <span class="detail-value" id="planName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Amount Paid:</span>
+                        <span class="detail-value" id="paidAmount">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Period:</span>
+                        <span class="detail-value" id="paymentPeriod">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date Applied:</span>
+                        <span class="detail-value" id="dateApplied">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Time Applied:</span>
+                        <span class="detail-value" id="timeApplied">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">✓</div>
+                    <div class="timeline-content">
+                        <h4>Application Submitted</h4>
+                        <p>Your application has been received</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon pending">●</div>
+                    <div class="timeline-content">
+                        <h4>Under Review</h4>
+                        <p>Our team is reviewing your application</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon inactive">3</div>
+                    <div class="timeline-content">
+                        <h4>Approval</h4>
+                        <p>Pending review completion</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon inactive">4</div>
+                    <div class="timeline-content">
+                        <h4>Disbursement</h4>
+                        <p>Funds will be sent to your M-Pesa</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📱 What's Next?</h4>
+                <p>You will receive an SMS notification once your application is approved. The loan amount will be disbursed directly to your M-Pesa number. If you have any questions, feel free to contact our support team.</p>
+            </div>
+
+            <div class="actions">
+                <a href="index.html" class="btn btn-primary">Back to Home</a>
+                <button class="btn btn-secondary" onclick="window.print()">Print Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load application data
+        const applicationData = JSON.parse(localStorage.getItem('nyota_application'));
+
+        if (!applicationData) {
+            window.location.href = 'index.html';
+        }
+
+        // Populate page with application data
+        document.getElementById('applicationId').textContent = applicationData.applicationId;
+        document.getElementById('fullName').textContent = applicationData.fullName;
+        document.getElementById('phoneNumber').textContent = applicationData.phone;
+        document.getElementById('idNumber').textContent = applicationData.idNumber;
+        document.getElementById('planName').textContent = applicationData.name;
+        document.getElementById('paidAmount').textContent = `KES ${applicationData.amount}`;
+        document.getElementById('paymentPeriod').textContent = applicationData.period;
+        document.getElementById('dateApplied').textContent = applicationData.appliedDate;
+        document.getElementById('timeApplied').textContent = applicationData.appliedTime;
+    </script>
+</body>
+</html>

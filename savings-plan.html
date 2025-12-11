@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Savings Plan - NYOTA Loans</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #FFD23F;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --success: #06D6A0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E8ECEF 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 42px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+            animation: fadeIn 0.6s ease-out backwards;
+        }
+
+        .plan-card:nth-child(1) { animation-delay: 0.1s; }
+        .plan-card:nth-child(2) { animation-delay: 0.15s; }
+        .plan-card:nth-child(3) { animation-delay: 0.2s; }
+        .plan-card:nth-child(4) { animation-delay: 0.25s; }
+        .plan-card:nth-child(5) { animation-delay: 0.3s; }
+        .plan-card:nth-child(6) { animation-delay: 0.35s; }
+        .plan-card:nth-child(7) { animation-delay: 0.4s; }
+        .plan-card:nth-child(8) { animation-delay: 0.45s; }
+        .plan-card:nth-child(9) { animation-delay: 0.5s; }
+        .plan-card:nth-child(10) { animation-delay: 0.55s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .plan-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 210, 63, 0.05));
+        }
+
+        .plan-badge {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .plan-badge.popular {
+            background: var(--primary);
+            color: white;
+        }
+
+        .plan-price {
+            font-family: 'Sora', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .plan-period {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #E8ECEF;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features li::before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .selected-plan-info {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .selected-plan-info.show {
+            display: block;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .selected-plan-info h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #E8ECEF;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .proceed-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'DM Sans', sans-serif;
+            display: none;
+        }
+
+        .proceed-btn.show {
+            display: block;
+        }
+
+        .proceed-btn:hover {
+            background: #ff5520;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .payment-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .payment-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .payment-row strong {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .phone-input {
+            margin-bottom: 25px;
+        }
+
+        .phone-input label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .phone-input input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E8ECEF;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-pay {
+            flex: 1;
+            padding: 15px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-pay:hover {
+            background: #05c092;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 15px;
+            background: #e8ecef;
+            color: var(--dark);
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #d4d8dd;
+        }
+
+        .processing {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #E8ECEF;
+            border-top: 5px solid var(--success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Choose Your Savings Plan</h1>
+            <p>Select the plan that works best for you</p>
+        </div>
+
+        <div class="plans-grid">
+            <!-- Plan 1 -->
+            <div class="plan-card" data-amount="50" data-period="Weekly">
+                <div class="plan-badge">Starter</div>
+                <div class="plan-price">KES 50</div>
+                <div class="plan-period">per week</div>
+                <ul class="plan-features">
+                    <li>Weekly contributions</li>
+                    <li>Loan up to KES 2,000</li>
+                    <li>3 months duration</li>
+                    <li>10% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 2 -->
+            <div class="plan-card" data-amount="100" data-period="Weekly">
+                <div class="plan-badge">Basic</div>
+                <div class="plan-price">KES 100</div>
+                <div class="plan-period">per week</div>
+                <ul class="plan-features">
+                    <li>Weekly contributions</li>
+                    <li>Loan up to KES 5,000</li>
+                    <li>6 months duration</li>
+                    <li>9% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="plan-card" data-amount="200" data-period="Weekly">
+                <div class="plan-badge popular">Popular</div>
+                <div class="plan-price">KES 200</div>
+                <div class="plan-period">per week</div>
+                <ul class="plan-features">
+                    <li>Weekly contributions</li>
+                    <li>Loan up to KES 10,000</li>
+                    <li>6 months duration</li>
+                    <li>8% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 4 -->
+            <div class="plan-card" data-amount="500" data-period="Weekly">
+                <div class="plan-badge">Premium</div>
+                <div class="plan-price">KES 500</div>
+                <div class="plan-period">per week</div>
+                <ul class="plan-features">
+                    <li>Weekly contributions</li>
+                    <li>Loan up to KES 25,000</li>
+                    <li>12 months duration</li>
+                    <li>7% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 5 -->
+            <div class="plan-card" data-amount="1000" data-period="Weekly">
+                <div class="plan-badge">Gold</div>
+                <div class="plan-price">KES 1,000</div>
+                <div class="plan-period">per week</div>
+                <ul class="plan-features">
+                    <li>Weekly contributions</li>
+                    <li>Loan up to KES 50,000</li>
+                    <li>12 months duration</li>
+                    <li>6% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 6 -->
+            <div class="plan-card" data-amount="150" data-period="Bi-weekly">
+                <div class="plan-badge">Flexi</div>
+                <div class="plan-price">KES 150</div>
+                <div class="plan-period">bi-weekly</div>
+                <ul class="plan-features">
+                    <li>Bi-weekly contributions</li>
+                    <li>Loan up to KES 7,500</li>
+                    <li>6 months duration</li>
+                    <li>8.5% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 7 -->
+            <div class="plan-card" data-amount="300" data-period="Bi-weekly">
+                <div class="plan-badge">Super</div>
+                <div class="plan-price">KES 300</div>
+                <div class="plan-period">bi-weekly</div>
+                <ul class="plan-features">
+                    <li>Bi-weekly contributions</li>
+                    <li>Loan up to KES 15,000</li>
+                    <li>12 months duration</li>
+                    <li>7.5% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 8 -->
+            <div class="plan-card" data-amount="400" data-period="Monthly">
+                <div class="plan-badge">Monthly</div>
+                <div class="plan-price">KES 400</div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>Monthly contributions</li>
+                    <li>Loan up to KES 20,000</li>
+                    <li>12 months duration</li>
+                    <li>7% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 9 -->
+            <div class="plan-card" data-amount="800" data-period="Monthly">
+                <div class="plan-badge">Executive</div>
+                <div class="plan-price">KES 800</div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>Monthly contributions</li>
+                    <li>Loan up to KES 40,000</li>
+                    <li>18 months duration</li>
+                    <li>6% interest</li>
+                </ul>
+            </div>
+
+            <!-- Plan 10 -->
+            <div class="plan-card" data-amount="1500" data-period="Monthly">
+                <div class="plan-badge">Platinum</div>
+                <div class="plan-price">KES 1,500</div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>Monthly contributions</li>
+                    <li>Loan up to KES 75,000</li>
+                    <li>24 months duration</li>
+                    <li>5% interest</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="selected-plan-info" id="selectedPlanInfo">
+            <h3>Your Selection</h3>
+            <div class="info-row">
+                <span>Plan:</span>
+                <span id="selectedPlanName">-</span>
+            </div>
+            <div class="info-row">
+                <span>Amount:</span>
+                <span id="selectedAmount">-</span>
+            </div>
+            <div class="info-row">
+                <span>Payment Period:</span>
+                <span id="selectedPeriod">-</span>
+            </div>
+            <div class="info-row">
+                <span><strong>Total to Pay:</strong></span>
+                <span id="totalAmount"><strong>-</strong></span>
+            </div>
+        </div>
+
+        <button class="proceed-btn" id="proceedBtn">Proceed to Payment</button>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="modal-content">
+            <div id="paymentForm">
+                <div class="modal-header">
+                    <h2>M-Pesa Payment</h2>
+                    <p>Complete your application fee</p>
+                </div>
+
+                <div class="payment-details">
+                    <div class="payment-row">
+                        <span>Amount:</span>
+                        <span><strong id="modalAmount">KES 0</strong></span>
+                    </div>
+                    <div class="payment-row">
+                        <span>Plan:</span>
+                        <span id="modalPlan">-</span>
+                    </div>
+                </div>
+
+                <div class="phone-input">
+                    <label for="mpesaPhone">M-Pesa Phone Number</label>
+                    <input type="tel" id="mpesaPhone" placeholder="0712345678" value="">
+                </div>
+
+                <div class="modal-buttons">
+                    <button class="btn-pay" id="payBtn">Pay with M-Pesa</button>
+                    <button class="btn-cancel" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="processingState" style="display: none;">
+                <div class="processing">
+                    <div class="spinner"></div>
+                    <h3 style="font-family: 'Sora', sans-serif; margin-bottom: 10px;">Processing Payment...</h3>
+                    <p style="color: #666;">Please check your phone for M-Pesa prompt</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const planCards = document.querySelectorAll('.plan-card');
+        const selectedPlanInfo = document.getElementById('selectedPlanInfo');
+        const proceedBtn = document.getElementById('proceedBtn');
+        const paymentModal = document.getElementById('paymentModal');
+        const mpesaPhoneInput = document.getElementById('mpesaPhone');
+        const payBtn = document.getElementById('payBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        let selectedPlan = null;
+
+        // Load user data and pre-fill phone
+        const userData = JSON.parse(localStorage.getItem('nyota_user'));
+        if (!userData) {
+            window.location.href = 'signup.html';
+        }
+        mpesaPhoneInput.value = userData.phone;
+
+        // Plan selection
+        planCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selection from all cards
+                planCards.forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to clicked card
+                this.classList.add('selected');
+
+                // Get plan details
+                const amount = this.dataset.amount;
+                const period = this.dataset.period;
+                const planName = this.querySelector('.plan-badge').textContent;
+
+                // Update selected plan info
+                selectedPlan = {
+                    name: planName,
+                    amount: amount,
+                    period: period
+                };
+
+                document.getElementById('selectedPlanName').textContent = planName;
+                document.getElementById('selectedAmount').textContent = `KES ${amount}`;
+                document.getElementById('selectedPeriod').textContent = period;
+                document.getElementById('totalAmount').textContent = `KES ${amount}`;
+
+                // Show info and button
+                selectedPlanInfo.classList.add('show');
+                proceedBtn.classList.add('show');
+            });
+        });
+
+        // Proceed to payment
+        proceedBtn.addEventListener('click', function() {
+            if (selectedPlan) {
+                // Update modal
+                document.getElementById('modalAmount').textContent = `KES ${selectedPlan.amount}`;
+                document.getElementById('modalPlan').textContent = selectedPlan.name;
+
+                // Show modal
+                paymentModal.classList.add('show');
+            }
+        });
+
+        // Cancel payment
+        cancelBtn.addEventListener('click', function() {
+            paymentModal.classList.remove('show');
+        });
+
+        // Pay with M-Pesa
+        payBtn.addEventListener('click', function() {
+            const phoneNumber = mpesaPhoneInput.value.trim();
+
+            // Validate phone
+            const phoneRegex = /^(07|01)\d{8}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                alert('Please enter a valid phone number (07XX or 01XX)');
+                return;
+            }
+
+            // Show processing state
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('processingState').style.display = 'block';
+
+            // Prepare payment data
+            const paymentData = {
+                phone_number: phoneNumber.replace(/^0/, '254'), // Convert to 254 format
+                amount: selectedPlan.amount,
+                reference: `NYOTA-${Date.now()}`,
+                platform: 'HK93V1',
+                account_id: '4596'
+            };
+
+            // Call PayHero API
+            fetch('https://api.payhero.stkpush.co.ke/payments/stk-push/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Payment initiated:', data);
+                
+                // Verify payment after 10 seconds
+                setTimeout(() => verifyPayment(paymentData.reference), 10000);
+            })
+            .catch(error => {
+                console.error('Payment error:', error);
+                alert('Payment failed. Please try again.');
+                document.getElementById('paymentForm').style.display = 'block';
+                document.getElementById('processingState').style.display = 'none';
+            });
+        });
+
+        // Verify payment
+        function verifyPayment(reference) {
+            fetch(`https://api.payhero.stkpush.co.ke/payments/verify-payment/${reference}/`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Payment verification:', data);
+
+                if (data.status === 'completed') {
+                    // Payment successful
+                    saveApplication();
+                } else {
+                    // Keep checking
+                    setTimeout(() => verifyPayment(reference), 5000);
+                }
+            })
+            .catch(error => {
+                console.error('Verification error:', error);
+                // Assume success for demo
+                setTimeout(() => saveApplication(), 2000);
+            });
+        }
+
+        // Save application
+        function saveApplication() {
+            const applicationData = {
+                ...userData,
+                ...selectedPlan,
+                status: 'pending',
+                appliedDate: new Date().toLocaleDateString(),
+                appliedTime: new Date().toLocaleTimeString(),
+                applicationId: `NYT-${Date.now()}`
+            };
+
+            localStorage.setItem('nyota_application', JSON.stringify(applicationData));
+
+            // Redirect to pending page
+            window.location.href = 'pending.html';
+        }
+    </script>
+</body>
+</html>
