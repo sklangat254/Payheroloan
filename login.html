@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NYOTA Loans</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -13,17 +15,17 @@
         }
 
         :root {
-            --primary: #FF6B35;
-            --secondary: #004E89;
-            --accent: #FFD23F;
-            --dark: #1A1A2E;
-            --light: #F8F9FA;
-            --success: #06D6A0;
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --accent: #06B6D4;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --gray: #64748B;
         }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(135deg, #F8F9FA 0%, #E8ECEF 100%);
+            background: linear-gradient(135deg, #EEF2FF 0%, #DBEAFE 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,15 +34,15 @@
         }
 
         .container {
-            max-width: 500px;
             width: 100%;
+            max-width: 480px;
         }
 
         .card {
             background: white;
             border-radius: 20px;
             padding: 30px 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.1);
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -63,12 +65,15 @@
         .logo h1 {
             font-family: 'Sora', sans-serif;
             font-size: 24px;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 8px;
         }
 
         .logo p {
-            color: #666;
+            color: var(--gray);
             font-size: 13px;
         }
 
@@ -87,7 +92,7 @@
         input {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #E8ECEF;
+            border: 2px solid #E2E8F0;
             border-radius: 10px;
             font-size: 14px;
             font-family: 'DM Sans', sans-serif;
@@ -97,13 +102,13 @@
         input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
 
         .btn {
             width: 100%;
             padding: 14px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #6366F1);
             color: white;
             border: none;
             border-radius: 10px;
@@ -116,20 +121,19 @@
         }
 
         .btn:hover {
-            background: #ff5520;
             transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
         }
 
         .btn:disabled {
-            background: #ccc;
+            background: #CBD5E1;
             cursor: not-allowed;
             transform: none;
         }
 
         .error-message {
-            background: #fee;
-            color: #dc3545;
+            background: #FEE2E2;
+            color: #DC2626;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 16px;
@@ -156,7 +160,7 @@
         .signup-link {
             text-align: center;
             margin-top: 18px;
-            color: #666;
+            color: var(--gray);
             font-size: 13px;
         }
 
@@ -176,7 +180,7 @@
         }
 
         .back-home a {
-            color: #666;
+            color: var(--gray);
             text-decoration: none;
             font-size: 12px;
         }
@@ -200,23 +204,23 @@
     <div class="container">
         <div class="card">
             <div class="logo">
-                <h1>Welcome Back</h1>
+                <h1>NYOTA</h1>
                 <p>Login to your account</p>
             </div>
 
-            <div id="errorMessage" class="error-message">
+            <div class="error-message" id="errorMessage">
                 Invalid phone number or password
             </div>
 
             <form id="loginForm">
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="0712345678">
+                    <input type="tel" id="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" maxlength="10" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                    <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
 
                 <button type="submit" class="btn" id="submitBtn">Login</button>
@@ -234,55 +238,42 @@
 
     <script>
         const form = document.getElementById('loginForm');
-        const submitBtn = document.getElementById('submitBtn');
         const errorMessage = document.getElementById('errorMessage');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Hide error message
-            errorMessage.classList.remove('show');
-
-            // Disable button
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Logging in...';
-
-            // Get form data
             const phone = document.getElementById('phone').value.trim();
             const password = document.getElementById('password').value;
 
-            // Get stored user data
-            const storedUser = localStorage.getItem('nyota_user');
+            // Get user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('nyota_user'));
 
-            if (storedUser) {
-                const userData = JSON.parse(storedUser);
-
-                // Verify credentials
-                if (userData.phone === phone && userData.password === password) {
-                    // Login successful
-                    localStorage.setItem('nyota_logged_in', 'true');
-                    
-                    // Check if user has pending application
-                    const application = localStorage.getItem('nyota_application');
-                    
-                    if (application) {
-                        // Redirect to pending page
-                        window.location.href = 'pending.html';
-                    } else {
-                        // Redirect to eligibility page
-                        window.location.href = 'eligibility.html';
-                    }
-                } else {
-                    // Login failed
-                    errorMessage.classList.add('show');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Login';
-                }
-            } else {
-                // No user found
+            if (!userData) {
+                errorMessage.textContent = 'No account found. Please sign up first.';
                 errorMessage.classList.add('show');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Login';
+                return;
+            }
+
+            // Validate credentials
+            if (userData.phone === phone && userData.password === password) {
+                localStorage.setItem('nyota_logged_in', 'true');
+
+                // Check if user has pending application
+                const application = localStorage.getItem('nyota_application');
+                if (application) {
+                    const appData = JSON.parse(application);
+                    if (appData.paymentStatus === 'success') {
+                        window.location.href = 'pending.html';
+                        return;
+                    }
+                }
+
+                // Redirect to eligibility
+                window.location.href = 'eligibility.html';
+            } else {
+                errorMessage.textContent = 'Invalid phone number or password';
+                errorMessage.classList.add('show');
             }
         });
     </script>

@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYOTA Loans - Fast, Simple, Reliable</title>
+    <title>NYOTA Loans - Quick Loans Made Easy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -13,12 +15,12 @@
         }
 
         :root {
-            --primary: #FF6B35;
-            --secondary: #004E89;
-            --accent: #FFD23F;
-            --dark: #1A1A2E;
-            --light: #F8F9FA;
-            --success: #06D6A0;
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --accent: #06B6D4;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --gray: #64748B;
         }
 
         body {
@@ -28,59 +30,44 @@
             overflow-x: hidden;
         }
 
-        /* Header - Mobile First */
-        header {
+        .navbar {
             background: white;
             padding: 15px 5%;
-            position: fixed;
-            width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 100;
             animation: slideDown 0.5s ease-out;
         }
 
         @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
         }
 
-        nav {
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         .logo {
             font-family: 'Sora', sans-serif;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Hide non-essential nav items on mobile */
-        .nav-links a:not(.btn) {
             display: none;
         }
 
@@ -99,15 +86,14 @@
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #6366F1);
             color: white;
-            box-shadow: 0 3px 12px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
         }
 
         .btn-primary:hover {
-            background: #ff5520;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
         }
 
         .btn-secondary {
@@ -121,10 +107,10 @@
             color: white;
         }
 
-        /* Hero Section - Mobile Optimized */
+        /* Hero Section */
         .hero {
             padding: 90px 5% 50px;
-            background: linear-gradient(135deg, #F8F9FA 0%, #E8ECEF 100%);
+            background: linear-gradient(135deg, #EEF2FF 0%, #DBEAFE 100%);
             position: relative;
             overflow: hidden;
             min-height: 70vh;
@@ -133,9 +119,9 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(79,70,229,0.1) 0%, transparent 70%);
             top: -100px;
             right: -100px;
             border-radius: 50%;
@@ -144,7 +130,6 @@
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
-            display: block;
             text-align: center;
         }
 
@@ -174,12 +159,15 @@
         }
 
         .hero-text h1 .highlight {
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-text p {
             font-size: 16px;
-            color: #666;
+            color: var(--gray);
             margin-bottom: 24px;
             line-height: 1.6;
             padding: 0 10px;
@@ -191,15 +179,6 @@
             gap: 12px;
             max-width: 400px;
             margin: 0 auto;
-        }
-
-        .hero-image {
-            display: none; /* Hide on mobile for simplicity */
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
         }
 
         .hero-stats {
@@ -224,13 +203,16 @@
             font-family: 'Sora', sans-serif;
             font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
             margin-bottom: 4px;
         }
 
         .stat-label {
-            color: #666;
+            color: var(--gray);
             font-size: 11px;
             line-height: 1.3;
         }
@@ -255,11 +237,11 @@
 
         .section-title p {
             font-size: 14px;
-            color: #666;
+            color: var(--gray);
         }
 
         .features-grid {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr;
@@ -268,16 +250,12 @@
 
         .feature-card {
             background: white;
-            padding: 30px 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
             transition: all 0.3s;
             animation: fadeIn 0.6s ease-out backwards;
         }
-
-        .feature-card:nth-child(1) { animation-delay: 0.1s; }
-        .feature-card:nth-child(2) { animation-delay: 0.2s; }
-        .feature-card:nth-child(3) { animation-delay: 0.3s; }
 
         @keyframes fadeIn {
             from {
@@ -290,16 +268,20 @@
             }
         }
 
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .feature-icon {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--primary), #ff8c5f);
-            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -314,7 +296,7 @@
         }
 
         .feature-card p {
-            color: #666;
+            color: var(--gray);
             line-height: 1.6;
             font-size: 13px;
         }
@@ -345,7 +327,7 @@
         .step-number {
             width: 50px;
             height: 50px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -355,7 +337,7 @@
             font-size: 24px;
             font-weight: 700;
             margin: 0 auto 16px;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         .step h3 {
@@ -365,14 +347,14 @@
         }
 
         .step p {
-            color: #666;
+            color: var(--gray);
             font-size: 13px;
         }
 
         /* CTA Section */
         .cta-section {
             padding: 50px 5%;
-            background: linear-gradient(135deg, var(--secondary) 0%, #003566 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
             color: white;
             text-align: center;
         }
@@ -391,8 +373,8 @@
         }
 
         .btn-accent {
-            background: var(--accent);
-            color: var(--dark);
+            background: white;
+            color: var(--primary);
             font-size: 15px;
             padding: 14px 32px;
             display: inline-block;
@@ -400,383 +382,220 @@
         }
 
         .btn-accent:hover {
-            background: #ffc519;
+            background: var(--light);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 210, 63, 0.4);
+            box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
         }
 
         /* Footer */
-        footer {
+        .footer {
             background: var(--dark);
             color: white;
             padding: 40px 5% 20px;
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            text-align: center;
         }
 
-        .footer-about h3 {
+        .footer-logo {
             font-family: 'Sora', sans-serif;
-            font-size: 22px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .footer-about p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #ccc;
+        .footer p {
+            font-size: 13px;
+            margin-bottom: 20px;
+            opacity: 0.8;
         }
 
-        .footer-links h4 {
-            font-family: 'Sora', sans-serif;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 10px;
+        .footer-links {
+            margin-bottom: 20px;
         }
 
         .footer-links a {
-            color: #ccc;
+            color: white;
             text-decoration: none;
-            transition: color 0.3s;
-            font-size: 14px;
+            margin: 0 12px;
+            font-size: 13px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
 
         .footer-links a:hover {
-            color: var(--primary);
+            opacity: 1;
         }
 
         .footer-bottom {
-            text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            color: #999;
-            font-size: 13px;
+            font-size: 12px;
+            opacity: 0.7;
         }
 
-        /* Responsive - Tablet and Up (Mobile First) */
         @media (min-width: 768px) {
-            .logo {
-                font-size: 28px;
-            }
-
-            .nav-links a:not(.btn) {
-                display: block;
-            }
-
             .nav-links {
-                gap: 30px;
+                display: flex;
+                gap: 20px;
             }
 
-            .hero {
-                padding: 120px 5% 70px;
+            .nav-links a {
+                color: var(--dark);
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+                transition: color 0.3s;
             }
 
-            .hero-text h1 {
-                font-size: 56px;
-            }
-
-            .hero-text p {
-                font-size: 20px;
+            .nav-links a:hover {
+                color: var(--primary);
             }
 
             .hero-buttons {
                 flex-direction: row;
-                max-width: none;
                 justify-content: center;
-            }
-
-            .hero-stats {
-                gap: 30px;
-                max-width: 600px;
-            }
-
-            .stat-number {
-                font-size: 36px;
-            }
-
-            .stat-label {
-                font-size: 14px;
-            }
-
-            .features {
-                padding: 80px 5%;
-            }
-
-            .section-title h2 {
-                font-size: 42px;
-            }
-
-            .section-title p {
-                font-size: 18px;
             }
 
             .features-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 30px;
-            }
-
-            .how-it-works {
-                padding: 80px 5%;
-            }
-
-            .steps {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .cta-section {
-                padding: 80px 5%;
-            }
-
-            .cta-section h2 {
-                font-size: 42px;
-            }
-
-            .cta-section p {
-                font-size: 18px;
-            }
-
-            .footer-content {
-                grid-template-columns: 2fr 1fr 1fr 1fr;
-                gap: 40px;
-            }
-        }
-
-        /* Desktop */
-        @media (min-width: 1024px) {
-            .hero-content {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 60px;
-                align-items: center;
-                text-align: left;
-            }
-
-            .hero-text h1 {
-                font-size: 64px;
-            }
-
-            .hero-buttons {
-                justify-content: flex-start;
-            }
-
-            .hero-stats {
-                margin-left: 0;
-            }
-
-            .hero-image {
-                display: block;
-                animation: float 3s ease-in-out infinite;
-            }
-
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
-            }
-
-            .features {
-                padding: 100px 5%;
-            }
-
-            .how-it-works {
-                padding: 100px 5%;
             }
 
             .steps {
                 grid-template-columns: repeat(4, 1fr);
             }
-
-            .step {
-                background: transparent;
-                padding: 0;
-                box-shadow: none;
-            }
-
-            .cta-section {
-                padding: 100px 5%;
-            }
-
-            .cta-section h2 {
-                font-size: 48px;
-            }
-
-            .cta-section p {
-                font-size: 20px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <a href="index.html" class="logo">NYOTA</a>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">NYOTA</div>
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
                 <a href="login.html">Login</a>
-                <a href="signup.html" class="btn btn-primary">Get Started</a>
             </div>
-        </nav>
-    </header>
+            <a href="signup.html" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; font-size: 14px; min-height: auto;">Get Started</a>
+        </div>
+    </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>
-                    Quick Loans,<br>
-                    <span class="highlight">Big Dreams</span>
-                </h1>
-                <p>Get instant access to flexible loans starting from KES 1,000. No paperwork, no stress - just fast cash when you need it most.</p>
+                <h1>Quick Loans, <span class="highlight">Big Dreams</span></h1>
+                <p>Get instant loan approval with just your M-Pesa records. No paperwork, no stress, just fast cash when you need it.</p>
                 <div class="hero-buttons">
                     <a href="signup.html" class="btn btn-primary">Apply Now</a>
                     <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">10K+</div>
-                        <div class="stat-label">Happy Customers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">2 Min</div>
-                        <div class="stat-label">Approval Time</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">Satisfaction Rate</div>
-                    </div>
-                </div>
             </div>
-            <div class="hero-image">
-                <svg width="500" height="500" viewBox="0 0 500 500">
-                    <circle cx="250" cy="250" r="200" fill="url(#gradient1)" opacity="0.1"/>
-                    <circle cx="250" cy="250" r="150" fill="url(#gradient2)" opacity="0.2"/>
-                    <path d="M250 100 L350 250 L250 400 L150 250 Z" fill="var(--primary)" opacity="0.8"/>
-                    <circle cx="250" cy="250" r="80" fill="white"/>
-                    <text x="250" y="270" text-anchor="middle" font-size="60" font-weight="bold" fill="var(--primary)">💰</text>
-                    <defs>
-                        <linearGradient id="gradient1">
-                            <stop offset="0%" stop-color="var(--primary)"/>
-                            <stop offset="100%" stop-color="var(--secondary)"/>
-                        </linearGradient>
-                        <linearGradient id="gradient2">
-                            <stop offset="0%" stop-color="var(--accent)"/>
-                            <stop offset="100%" stop-color="var(--primary)"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2 Min</span>
+                    <span class="stat-label">Approval Time</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Satisfaction</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features" id="features">
         <div class="section-title">
             <h2>Why Choose NYOTA?</h2>
-            <p>We make borrowing simple, fast, and stress-free</p>
+            <p>Fast, secure, and convenient loan services</p>
         </div>
+
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
                 <h3>Instant Approval</h3>
-                <p>Get approved in minutes, not days. Our smart system processes your application instantly.</p>
+                <p>Get approved in minutes with our automated M-Pesa verification system. No waiting, no hassle.</p>
             </div>
+
             <div class="feature-card">
                 <div class="feature-icon">🔒</div>
                 <h3>100% Secure</h3>
-                <p>Bank-level encryption protects your data. Your information is safe with us.</p>
+                <p>Your data is encrypted and protected. We use bank-level security to keep your information safe.</p>
             </div>
+
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
                 <h3>Mobile First</h3>
-                <p>Apply from anywhere using your phone. No need to visit a branch.</p>
+                <p>Apply from anywhere using your phone. Everything happens through M-Pesa - simple and convenient.</p>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
         <div class="section-title">
-            <h2>Get Your Loan in 4 Easy Steps</h2>
-            <p>Simple process, fast results</p>
+            <h2>How It Works</h2>
+            <p>Get your loan in 4 simple steps</p>
         </div>
+
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
                 <h3>Sign Up</h3>
-                <p>Create your account in under 2 minutes</p>
+                <p>Create your account with basic details</p>
             </div>
+
             <div class="step">
                 <div class="step-number">2</div>
                 <h3>Check Eligibility</h3>
-                <p>Fill in basic details and get instant approval</p>
+                <p>Quick verification of your M-Pesa records</p>
             </div>
+
             <div class="step">
                 <div class="step-number">3</div>
-                <h3>Choose Plan</h3>
-                <p>Select your savings plan from KES 50+</p>
+                <h3>Select Plan</h3>
+                <p>Choose your loan amount and pay fee</p>
             </div>
+
             <div class="step">
                 <div class="step-number">4</div>
-                <h3>Get Money</h3>
-                <p>Receive funds directly to your M-Pesa</p>
+                <h3>Get Funded</h3>
+                <p>Receive money directly to M-Pesa</p>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section">
         <h2>Ready to Get Started?</h2>
         <p>Join thousands of satisfied customers today</p>
-        <a href="signup.html" class="btn btn-accent">Apply for a Loan Now</a>
+        <a href="signup.html" class="btn btn-accent">Apply for Loan</a>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="footer-content">
-            <div class="footer-about">
-                <h3>NYOTA Loans</h3>
-                <p>Making financial freedom accessible to everyone. Fast, reliable, and customer-focused.</p>
-            </div>
+            <div class="footer-logo">NYOTA</div>
+            <p>Fast, reliable, and secure loan services for Kenyans</p>
+            
             <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Careers</a></li>
-                </ul>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="login.html">Login</a>
+                <a href="signup.html">Sign Up</a>
             </div>
-            <div class="footer-links">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Privacy</a></li>
-                </ul>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 NYOTA Loans. All rights reserved.</p>
             </div>
-            <div class="footer-links">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="tel:+254705809731">+254 705 809 731</a></li>
-                    <li><a href="mailto:info@nyotaloans.co.ke">info@nyotaloans.co.ke</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 NYOTA Loans. All rights reserved.</p>
         </div>
     </footer>
 </body>
