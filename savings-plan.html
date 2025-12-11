@@ -64,21 +64,20 @@
 
         .plans-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         .plan-card {
             background: white;
             border-radius: 20px;
-            padding: 25px 20px;
+            padding: 30px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             transition: all 0.3s;
             cursor: pointer;
             border: 3px solid transparent;
             animation: fadeIn 0.6s ease-out backwards;
-            min-height: auto;
         }
 
         .plan-card:nth-child(1) { animation-delay: 0.1s; }
@@ -741,6 +740,21 @@
     </div>
 
     <script>
+        // Hide any modals that might be visible from previous session
+        window.addEventListener('DOMContentLoaded', function() {
+            const paymentModal = document.getElementById('paymentModal');
+            const selectionModal = document.getElementById('selectionModal');
+            
+            if (paymentModal) paymentModal.classList.remove('show');
+            if (selectionModal) selectionModal.classList.remove('show');
+            
+            // Reset payment form state
+            const paymentForm = document.getElementById('paymentForm');
+            const processingState = document.getElementById('processingState');
+            if (paymentForm) paymentForm.style.display = 'block';
+            if (processingState) processingState.style.display = 'none';
+        });
+
         const planCards = document.querySelectorAll('.plan-card');
         const selectionModal = document.getElementById('selectionModal');
         const closeSelection = document.getElementById('closeSelection');
@@ -757,6 +771,13 @@
         if (!userData) {
             window.location.href = 'signup.html';
         }
+        
+        // Check if application already exists - redirect to pending
+        const existingApplication = localStorage.getItem('nyota_application');
+        if (existingApplication) {
+            window.location.href = 'pending.html';
+        }
+        
         mpesaPhoneInput.value = userData.phone;
 
         // Plan selection
@@ -820,6 +841,10 @@
         // Cancel payment
         cancelBtn.addEventListener('click', function() {
             paymentModal.classList.remove('show');
+            
+            // Reset payment form state
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('processingState').style.display = 'none';
         });
 
         // Pay with M-Pesa
@@ -885,6 +910,14 @@
             };
 
             localStorage.setItem('nyota_application', JSON.stringify(applicationData));
+
+            // Hide all modals before redirecting
+            paymentModal.classList.remove('show');
+            selectionModal.classList.remove('show');
+            
+            // Reset payment form state
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('processingState').style.display = 'none';
 
             // Redirect to pending page
             window.location.href = 'pending.html';
