@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - NYOTA Loans</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -15,17 +13,17 @@
         }
 
         :root {
-            --primary: #4F46E5;
-            --secondary: #10B981;
-            --accent: #06B6D4;
-            --dark: #1E293B;
-            --light: #F8FAFC;
-            --gray: #64748B;
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #FFD23F;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --success: #06D6A0;
         }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(135deg, #EEF2FF 0%, #DBEAFE 100%);
+            background: linear-gradient(135deg, #F8F9FA 0%, #E8ECEF 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -34,15 +32,15 @@
         }
 
         .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 480px;
         }
 
         .card {
             background: white;
             border-radius: 20px;
             padding: 30px 25px;
-            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -65,15 +63,12 @@
         .logo h1 {
             font-family: 'Sora', sans-serif;
             font-size: 24px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             margin-bottom: 8px;
         }
 
         .logo p {
-            color: var(--gray);
+            color: #666;
             font-size: 13px;
         }
 
@@ -92,7 +87,7 @@
         input {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #E2E8F0;
+            border: 2px solid #E8ECEF;
             border-radius: 10px;
             font-size: 14px;
             font-family: 'DM Sans', sans-serif;
@@ -102,13 +97,13 @@
         input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
         }
 
         .btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, var(--primary), #6366F1);
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 10px;
@@ -121,12 +116,13 @@
         }
 
         .btn:hover {
+            background: #ff5520;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.3);
         }
 
         .btn:disabled {
-            background: #CBD5E1;
+            background: #ccc;
             cursor: not-allowed;
             transform: none;
         }
@@ -134,7 +130,7 @@
         .divider {
             text-align: center;
             margin: 20px 0;
-            color: var(--gray);
+            color: #999;
             position: relative;
             font-size: 12px;
         }
@@ -146,7 +142,7 @@
             top: 50%;
             width: 40%;
             height: 1px;
-            background: #E2E8F0;
+            background: #E8ECEF;
         }
 
         .divider::before {
@@ -160,7 +156,7 @@
         .login-link {
             text-align: center;
             margin-top: 18px;
-            color: var(--gray);
+            color: #666;
             font-size: 13px;
         }
 
@@ -175,7 +171,7 @@
         }
 
         .error {
-            color: #EF4444;
+            color: #dc3545;
             font-size: 11px;
             margin-top: 4px;
             display: none;
@@ -186,7 +182,7 @@
         }
 
         .success-message {
-            background: var(--secondary);
+            background: var(--success);
             color: white;
             padding: 12px;
             border-radius: 8px;
@@ -217,7 +213,7 @@
         }
 
         .back-home a {
-            color: var(--gray);
+            color: #666;
             text-decoration: none;
             font-size: 12px;
         }
@@ -241,49 +237,47 @@
     <div class="container">
         <div class="card">
             <div class="logo">
-                <h1>NYOTA</h1>
-                <p>Create your account to get started</p>
+                <h1>Create Account</h1>
+                <p>Start your journey to financial freedom</p>
             </div>
 
-            <div class="success-message" id="successMessage">
-                Account created successfully!
+            <div id="successMessage" class="success-message">
+                Account created successfully! Redirecting...
             </div>
 
             <form id="signupForm">
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
                     <div class="error" id="nameError">Please enter your full name</div>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" maxlength="10" required>
+                    <input type="tel" id="phone" name="phone" required placeholder="0712345678">
                     <div class="error" id="phoneError">Please enter a valid phone number</div>
                 </div>
 
                 <div class="form-group">
                     <label for="idNumber">ID Number</label>
-                    <input type="text" id="idNumber" placeholder="Enter your ID number" minlength="7" maxlength="8" required>
-                    <div class="error" id="idError">ID must be 7-8 digits</div>
+                    <input type="text" id="idNumber" name="idNumber" required placeholder="12345678">
+                    <div class="error" id="idError">Please enter a valid ID number</div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="your.email@example.com" required>
-                    <div class="error" id="emailError">Please enter a valid email address</div>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    <div class="error" id="emailError">Please enter a valid email</div>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="At least 6 characters" minlength="6" required>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
                     <div class="error" id="passwordError">Password must be at least 6 characters</div>
                 </div>
 
                 <button type="submit" class="btn" id="submitBtn">Create Account</button>
             </form>
-
-            <div class="divider">OR</div>
 
             <div class="login-link">
                 Already have an account? <a href="login.html">Login</a>
@@ -300,73 +294,100 @@
         const submitBtn = document.getElementById('submitBtn');
         const successMessage = document.getElementById('successMessage');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Get form values
-            const fullName = document.getElementById('fullName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const idNumber = document.getElementById('idNumber').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            // Reset errors
-            document.querySelectorAll('.error').forEach(err => err.classList.remove('show'));
-
-            // Validate
+        // Form validation
+        function validateForm() {
             let isValid = true;
 
+            // Name validation
+            const fullName = document.getElementById('fullName').value.trim();
             if (fullName.length < 3) {
                 document.getElementById('nameError').classList.add('show');
                 isValid = false;
+            } else {
+                document.getElementById('nameError').classList.remove('show');
             }
 
+            // Phone validation
+            const phone = document.getElementById('phone').value.trim();
             const phoneRegex = /^(07|01)\d{8}$/;
             if (!phoneRegex.test(phone)) {
                 document.getElementById('phoneError').classList.add('show');
                 isValid = false;
+            } else {
+                document.getElementById('phoneError').classList.remove('show');
             }
 
+            // ID validation
+            const idNumber = document.getElementById('idNumber').value.trim();
             if (idNumber.length < 7 || idNumber.length > 8) {
                 document.getElementById('idError').classList.add('show');
                 isValid = false;
+            } else {
+                document.getElementById('idError').classList.remove('show');
             }
 
+            // Email validation
+            const email = document.getElementById('email').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 document.getElementById('emailError').classList.add('show');
                 isValid = false;
+            } else {
+                document.getElementById('emailError').classList.remove('show');
             }
 
+            // Password validation
+            const password = document.getElementById('password').value;
             if (password.length < 6) {
                 document.getElementById('passwordError').classList.add('show');
                 isValid = false;
+            } else {
+                document.getElementById('passwordError').classList.remove('show');
             }
 
-            if (!isValid) return;
+            return isValid;
+        }
 
-            // Save to localStorage
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+
+            // Get form data
             const userData = {
-                fullName,
-                phone,
-                idNumber,
-                email,
-                password,
+                fullName: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                idNumber: document.getElementById('idNumber').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
                 createdAt: new Date().toISOString()
             };
 
+            // Save to localStorage
             localStorage.setItem('nyota_user', JSON.stringify(userData));
-            localStorage.setItem('nyota_logged_in', 'true');
 
-            // Show success
+            // Show success message
             successMessage.classList.add('show');
-            submitBtn.disabled = true;
 
-            // Redirect after 1 second
+            // Redirect to eligibility page
             setTimeout(() => {
                 window.location.href = 'eligibility.html';
-            }, 1000);
+            }, 1500);
         });
+
+        // Real-time validation
+        document.getElementById('fullName').addEventListener('blur', validateForm);
+        document.getElementById('phone').addEventListener('blur', validateForm);
+        document.getElementById('idNumber').addEventListener('blur', validateForm);
+        document.getElementById('email').addEventListener('blur', validateForm);
+        document.getElementById('password').addEventListener('blur', validateForm);
     </script>
 </body>
 </html>
