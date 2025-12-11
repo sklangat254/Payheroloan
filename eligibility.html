@@ -35,9 +35,9 @@
 
         .card {
             background: white;
-            border-radius: 30px;
-            padding: 50px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -54,26 +54,26 @@
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
         }
 
         .header h1 {
             font-family: 'Sora', sans-serif;
-            font-size: 36px;
+            font-size: 24px;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .header p {
             color: #666;
-            font-size: 16px;
+            font-size: 13px;
         }
 
         .progress-bar {
-            height: 8px;
+            height: 6px;
             background: #E8ECEF;
             border-radius: 10px;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             overflow: hidden;
         }
 
@@ -85,34 +85,34 @@
         }
 
         .form-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .form-section h3 {
             font-family: 'Sora', sans-serif;
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 14px;
             color: var(--dark);
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--dark);
-            font-size: 14px;
+            font-size: 12px;
         }
 
         input, select {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border: 2px solid #E8ECEF;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-family: 'DM Sans', sans-serif;
             transition: all 0.3s;
         }
@@ -120,27 +120,28 @@
         input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
         }
 
         .btn {
             width: 100%;
-            padding: 18px;
+            padding: 14px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'DM Sans', sans-serif;
+            min-height: 44px;
         }
 
         .btn:hover {
             background: #ff5520;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.3);
         }
 
         .btn:disabled {
@@ -151,25 +152,27 @@
 
         .info-box {
             background: #e8f5ff;
-            border-left: 4px solid var(--secondary);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            border-left: 3px solid var(--secondary);
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         .info-box h4 {
             font-family: 'Sora', sans-serif;
             color: var(--secondary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
         }
 
         .info-box ul {
-            margin-left: 20px;
+            margin-left: 16px;
             color: #666;
+            font-size: 12px;
         }
 
         .info-box li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .checking-overlay {
@@ -191,10 +194,10 @@
 
         .checking-modal {
             background: white;
-            padding: 50px;
-            border-radius: 30px;
+            padding: 35px 25px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
+            max-width: 350px;
             animation: zoomIn 0.3s ease-out;
         }
 
@@ -210,13 +213,13 @@
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid #E8ECEF;
-            border-top: 5px solid var(--primary);
+            width: 50px;
+            height: 50px;
+            border: 4px solid #E8ECEF;
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 25px;
+            margin: 0 auto 18px;
         }
 
         @keyframes spin {
@@ -225,26 +228,27 @@
 
         .checking-modal h3 {
             font-family: 'Sora', sans-serif;
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 8px;
         }
 
         .checking-modal p {
             color: #666;
+            font-size: 13px;
         }
 
         @media (max-width: 768px) {
             .card {
-                padding: 30px 25px;
+                padding: 25px 20px;
             }
 
             .header h1 {
-                font-size: 28px;
+                font-size: 22px;
             }
 
             .checking-modal {
-                padding: 40px 30px;
-                margin: 0 20px;
+                padding: 30px 20px;
+                margin: 0 15px;
             }
         }
     </style>

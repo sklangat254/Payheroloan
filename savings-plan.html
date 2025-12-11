@@ -35,7 +35,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 25px;
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -52,31 +52,31 @@
 
         .header h1 {
             font-family: 'Sora', sans-serif;
-            font-size: 42px;
+            font-size: 24px;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .header p {
             color: #666;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .plan-card {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 16px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
             transition: all 0.3s;
             cursor: pointer;
-            border: 3px solid transparent;
+            border: 2px solid transparent;
             animation: fadeIn 0.6s ease-out backwards;
         }
 
@@ -103,8 +103,8 @@
         }
 
         .plan-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .plan-card.selected {
@@ -115,12 +115,12 @@
         .plan-badge {
             background: var(--accent);
             color: var(--dark);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 700;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
 
         .plan-badge.popular {
@@ -130,28 +130,28 @@
 
         .plan-price {
             font-family: 'Sora', sans-serif;
-            font-size: 36px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
 
         .plan-period {
             color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
         }
 
         .plan-features {
             list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .plan-features li {
-            padding: 10px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #E8ECEF;
             color: #666;
-            font-size: 14px;
+            font-size: 11px;
         }
 
         .plan-features li:last-child {
@@ -162,7 +162,7 @@
             content: "✓ ";
             color: var(--success);
             font-weight: bold;
-            margin-right: 8px;
+            margin-right: 5px;
         }
 
         .selected-plan-info {
@@ -244,9 +244,9 @@
 
         .selection-modal-content {
             background: white;
-            border-radius: 25px;
-            padding: 30px 25px;
-            max-width: 450px;
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 380px;
             width: 100%;
             animation: zoomIn 0.3s ease-out;
             position: relative;
@@ -256,14 +256,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
             border-bottom: 2px solid #E8ECEF;
         }
 
         .selection-header h3 {
             font-family: 'Sora', sans-serif;
-            font-size: 22px;
+            font-size: 16px;
             color: var(--dark);
             margin: 0;
         }
@@ -271,12 +271,12 @@
         .close-selection {
             background: none;
             border: none;
-            font-size: 32px;
+            font-size: 26px;
             color: #999;
             cursor: pointer;
             padding: 0;
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -290,50 +290,50 @@
 
         .selection-details {
             background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 14px;
         }
 
         .selection-details .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #E8ECEF;
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .selection-details .info-row:last-child {
             border-bottom: none;
-            padding-top: 15px;
-            margin-top: 5px;
+            padding-top: 10px;
+            margin-top: 3px;
             border-top: 2px solid var(--primary);
         }
 
         .selection-details .info-row.total {
-            font-size: 18px;
+            font-size: 15px;
             color: var(--primary);
         }
 
         .proceed-btn-modal {
             width: 100%;
-            padding: 18px;
+            padding: 12px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'DM Sans', sans-serif;
-            min-height: 56px;
+            min-height: 44px;
         }
 
         .proceed-btn-modal:hover {
             background: #ff5520;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
         }
 
         /* Payment Modal */
@@ -348,7 +348,7 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 20px;
+            padding: 15px;
         }
 
         .payment-modal.show {
@@ -357,9 +357,9 @@
 
         .modal-content {
             background: white;
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 500px;
+            border-radius: 20px;
+            padding: 25px 20px;
+            max-width: 400px;
             width: 100%;
             animation: zoomIn 0.3s ease-out;
         }
@@ -377,69 +377,76 @@
 
         .modal-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 18px;
         }
 
         .modal-header h2 {
             font-family: 'Sora', sans-serif;
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .modal-header p {
+            font-size: 12px;
+            color: #666;
         }
 
         .payment-details {
             background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 16px;
         }
 
         .payment-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 6px 0;
+            font-size: 13px;
         }
 
         .payment-row strong {
             font-weight: 700;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .phone-input {
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         .phone-input label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .phone-input input {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 2px solid #E8ECEF;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-family: 'DM Sans', sans-serif;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
 
         .btn-pay {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             background: var(--success);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 44px;
         }
 
         .btn-pay:hover {
@@ -448,15 +455,16 @@
 
         .btn-cancel {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             background: #e8ecef;
             color: var(--dark);
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 44px;
         }
 
         .btn-cancel:hover {
@@ -465,21 +473,32 @@
 
         .processing {
             text-align: center;
-            padding: 40px 20px;
+            padding: 25px 15px;
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid #E8ECEF;
-            border-top: 5px solid var(--success);
+            width: 45px;
+            height: 45px;
+            border: 4px solid #E8ECEF;
+            border-top: 4px solid var(--success);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        .processing h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .processing p {
+            color: #666;
+            font-size: 12px;
         }
 
         @media (max-width: 768px) {

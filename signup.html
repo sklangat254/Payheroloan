@@ -38,9 +38,9 @@
 
         .card {
             background: white;
-            border-radius: 30px;
-            padding: 50px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -57,39 +57,39 @@
 
         .logo {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
         }
 
         .logo h1 {
             font-family: 'Sora', sans-serif;
-            font-size: 36px;
+            font-size: 24px;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .logo p {
             color: #666;
-            font-size: 16px;
+            font-size: 13px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--dark);
-            font-size: 14px;
+            font-size: 12px;
         }
 
         input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border: 2px solid #E8ECEF;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-family: 'DM Sans', sans-serif;
             transition: all 0.3s;
         }
@@ -97,27 +97,28 @@
         input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
         }
 
         .btn {
             width: 100%;
-            padding: 18px;
+            padding: 14px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'DM Sans', sans-serif;
+            min-height: 44px;
         }
 
         .btn:hover {
             background: #ff5520;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.3);
         }
 
         .btn:disabled {
@@ -128,9 +129,10 @@
 
         .divider {
             text-align: center;
-            margin: 30px 0;
+            margin: 20px 0;
             color: #999;
             position: relative;
+            font-size: 12px;
         }
 
         .divider::before,
@@ -153,8 +155,9 @@
 
         .login-link {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 18px;
             color: #666;
+            font-size: 13px;
         }
 
         .login-link a {
@@ -169,8 +172,8 @@
 
         .error {
             color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
+            font-size: 11px;
+            margin-top: 4px;
             display: none;
         }
 
@@ -181,10 +184,11 @@
         .success-message {
             background: var(--success);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
             display: none;
+            font-size: 13px;
         }
 
         .success-message.show {
@@ -205,13 +209,13 @@
 
         .back-home {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 16px;
         }
 
         .back-home a {
             color: #666;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .back-home a:hover {
@@ -220,11 +224,11 @@
 
         @media (max-width: 768px) {
             .card {
-                padding: 30px 25px;
+                padding: 25px 20px;
             }
 
             .logo h1 {
-                font-size: 28px;
+                font-size: 22px;
             }
         }
     </style>
